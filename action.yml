@@ -1,0 +1,31 @@
+name: 'Coolify Deploy Action via API'
+description: 'Trigger a Coolify deployment via API'
+branding:
+  icon: 'rocket'
+  color: 'blue'
+
+inputs:
+  token:
+    description: 'Coolify API token (Bearer token)'
+    required: true
+  base_url:
+    description: 'Coolify base URL (e.g., https://coolify.example.com)'
+    required: true
+  application_uuid:
+    description: 'Application UUID to deploy'
+    required: true
+  force:
+    description: 'Force deployment'
+    required: false
+    default: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Trigger Coolify deployment
+      shell: bash
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
+          "${{ inputs.base_url }}/api/v1/deploy?uuid=${{ inputs.application_uuid }}&force=${{ inputs.force }}"
+
