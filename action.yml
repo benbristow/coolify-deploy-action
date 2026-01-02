@@ -25,7 +25,7 @@ runs:
     - name: Trigger Coolify deployment
       shell: bash
       run: |
-        curl -X POST \
+        curl -sSL --fail-with-body -X POST \
           -H "Authorization: Bearer ${{ inputs.token }}" \
           "${{ inputs.base_url }}/api/v1/deploy?uuid=${{ inputs.application_uuid }}&force=${{ inputs.force }}"
 
